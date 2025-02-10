@@ -3,10 +3,6 @@ import { ChevronDown } from "lucide-react";
 export default function Home() {
   return (
     <div className="relative bg-surface-a0 text-white min-h-screen flex flex-col items-center justify-center text-center px-6 overflow-hidden">
-      {/* Glowing Accent */}
-      <div className="absolute top-16 w-32 h-32 bg-primary-a10 blur-[80px] opacity-60"></div>
-
-      {/* Animated Gradient Glow */}
       <div className="absolute -z-10 w-[80vw] h-[80vw] max-w-[500px] max-h-[500px] bg-primary-a0 rounded-full blur-[120px] opacity-20 animate-pulse"></div>
 
       {/* Headline */}
