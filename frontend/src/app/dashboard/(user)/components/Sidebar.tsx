@@ -34,9 +34,9 @@ export default function Sidebar() {
         <nav className="mt-4">
           {[
             { name: "Home", href: "/dashboard" },
-            { name: "Profile", href: "/profile" },
-            { name: "Settings", href: "/settings" },
-            { name: "Reports", href: "/reports" },
+            { name: "Servers", href: "/dashboard/servers" },
+            { name: "Settings", href: "/dashboard/settings" },
+            { name: "Logs", href: "/dashboard/logs" },
           ].map((item) => (
             <Link
               key={item.href}

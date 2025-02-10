@@ -1,6 +1,7 @@
 "use client";
 
 import Sidebar from "./components/Sidebar";
+import { ExternalLink, HelpCircle, LifeBuoy, Server } from "lucide-react"; // Icons
 
 export default function Dashboard() {
   return (
@@ -14,28 +15,49 @@ export default function Dashboard() {
         <section className="mb-8">
           <h2 className="text-4xl font-bold tracking-tight">Welcome Back! 👋</h2>
           <p className="opacity-80 mt-2 text-lg">
-            Here&apos;s a summary of your activity.
+            Manage your hosting services easily.
           </p>
         </section>
 
-        {/* Quick Stats */}
-        <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* Action Cards */}
+        <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {[
-            { title: "Total Users", value: "1,254" },
-            { title: "Active Sessions", value: "32" },
-            { title: "Pending Tasks", value: "7" },
-          ].map((stat, index) => (
-            <div
+            {
+              title: "Join the Discord",
+              description: "Chat with our community & get support.",
+              icon: <ExternalLink size={24} />,
+              link: "https://discord.com/invite/example",
+            },
+            {
+              title: "View Documentation",
+              description: "Learn how to set up and manage your services.",
+              icon: <HelpCircle size={24} />,
+              link: "/docs",
+            },
+            {
+              title: "Open a Support Ticket",
+              description: "Need help? Contact our support team.",
+              icon: <LifeBuoy size={24} />,
+              link: "/support",
+            },
+            {
+              title: "Manage Your Servers",
+              description: "View and control your hosted services.",
+              icon: <Server size={24} />,
+              link: "/servers",
+            },
+          ].map((card, index) => (
+            <a
               key={index}
-              className="p-6 border border-primary-a10/40 rounded-lg shadow-lg backdrop-blur-md"
+              href={card.link}
+              className="p-6 border border-primary-a10/40 rounded-lg shadow-md backdrop-blur-md flex flex-col gap-3 hover:bg-primary-a10/10 transition"
             >
-              <h3 className="text-lg font-medium text-neutral-300">
-                {stat.title}
-              </h3>
-              <p className="text-3xl font-bold text-primary-a30 mt-2">
-                {stat.value}
-              </p>
-            </div>
+              <div className="flex items-center gap-3">
+                <span className="text-primary-a30">{card.icon}</span>
+                <h3 className="text-lg font-semibold">{card.title}</h3>
+              </div>
+              <p className="text-sm opacity-80">{card.description}</p>
+            </a>
           ))}
         </section>
 
