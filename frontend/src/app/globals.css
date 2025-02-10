@@ -38,10 +38,3 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
-
-a {
-  color: var(--primary-a30);
-}
-a:hover {
-  color: var(--primary-a10);
-}
