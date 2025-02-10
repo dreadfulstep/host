@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import Link from "next/link";
 import { useState } from "react";
@@ -14,7 +14,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex justify-center items-center bg-surface-a0">
+    <div className="min-h-screen flex justify-center items-center">
       <div className="w-full max-w-md p-8 border-primary-a0/60 bg-primary-a20/5 border rounded-lg shadow-lg">
         <h1 className="text-3xl font-semibold text-white text-center mb-8">
           Login to Your Account
@@ -69,6 +69,15 @@ export default function LoginPage() {
               className="text-primary-a40 underline hover:text-primary-a20 transition duration-200"
             >
               Sign up here
+            </Link>
+          </p>
+          <p className="text-sm text-white opacity-80 flex flex-col mt-2">
+            Forgot your password?{" "}
+            <Link
+              href="/forgot-password"
+              className="text-primary-a40 underline hover:text-primary-a20 transition duration-200"
+            >
+              Reset it here
             </Link>
           </p>
         </div>
