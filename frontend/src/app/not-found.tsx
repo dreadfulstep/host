@@ -10,7 +10,7 @@ export default function NotFoundPage() {
         <p className="text-xl mb-6">Oops! The page you're looking for does not exist.</p>
         <Link
           href="/"
-          className="bg-primary-a10 hover:bg-primary-a20 text-white py-2 px-4 rounded-lg text-lg font-semibold transition duration-300"
+          className="border border-primary-a10 hover:bg-primary-a20/20 hover:text-white text-white py-3 px-4 rounded-lg text-lg font-semibold transition duration-300"
         >
           Go Back Home
         </Link>
