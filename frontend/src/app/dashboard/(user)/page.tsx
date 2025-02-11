@@ -5,7 +5,7 @@ import { ExternalLink, HelpCircle, LifeBuoy, Server } from "lucide-react"; // Ic
 
 export default function Dashboard() {
   return (
-    <div className="flex min-h-screen bg-surface-a0 text-white">
+    <div className="flex min-h-screen text-white">
       {/* Sidebar */}
       <Sidebar />
 
@@ -44,7 +44,7 @@ export default function Dashboard() {
               title: "Manage Your Servers",
               description: "View and control your hosted services.",
               icon: <Server size={24} />,
-              link: "/servers",
+              link: "/dashboard/servers",
             },
           ].map((card, index) => (
             <a
@@ -61,7 +61,6 @@ export default function Dashboard() {
           ))}
         </section>
 
-        {/* Recent Activity */}
         <section className="mt-10">
           <h3 className="text-2xl font-semibold mb-4">Recent Activity</h3>
           <ul className="space-y-4">
