@@ -5,6 +5,7 @@ import { useParams, useRouter } from "next/navigation";
 import ServerSidebar from "../components/ServerSidebar";
 import { Eye, EyeOff } from "lucide-react";
 import { toast } from "sonner";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/Select";
 
 const parseEnvVariables = (envString: string) => {
   const envVars: EnvVar[] = [];
@@ -116,18 +117,18 @@ export default function SettingsPage() {
                 Docker Image Version
               </label>
               <div className="mt-2">
-                <select
-                  id="dockerImage"
-                  value={dockerImage}
-                  onChange={(e) => setDockerImage(e.target.value)}
-                  className="w-full px-4 py-2 bg-primary-a0/10 border border-primary-a20/40 rounded-lg"
-                >
-                  {defaultConfig.dockerImages.map((image) => (
-                    <option key={image} value={image}>
-                      {image}
-                    </option>
-                  ))}
-                </select>
+                <Select value={dockerImage} onValueChange={(value) => setDockerImage(value)}>
+                  <SelectTrigger className="w-[180px] bg-primary-a0/10 border border-primary-a20/40">
+                    <SelectValue placeholder="Select Docker Image" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-surface-a0 text-white border border-primary-a20/40">
+                    {defaultConfig.dockerImages.map((image) => (
+                      <SelectItem key={image} value={image} className="focus:bg-primary-a10/20 focus:text-white">
+                        {image}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
                 <p className="mt-2 text-sm text-neutral-400">
                   Selected Docker image: <strong>{dockerImage}</strong>
                 </p>
