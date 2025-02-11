@@ -48,7 +48,7 @@ export default function ServerSidebar() {
         </div>
 
         <div
-            className={`fixed top-0 left-0 h-full w-full bg-surface-a0 border-r border-primary-a10/40 z-40 transition-transform duration-300 ease-in-out
+            className={`fixed top-0 left-0 min-h-screen h-full w-full bg-surface-a0 border-r border-primary-a10/40 z-40 transition-transform duration-300 ease-in-out
             ${isOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0 md:relative md:flex md:w-64 md:flex-col md:min-h-screen`}
         >
             <div className="flex justify-between items-center p-4 border-b border-surface-a30">

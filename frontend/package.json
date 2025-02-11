@@ -9,7 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@monaco-editor/react": "^4.6.0",
     "ansi-to-react": "^6.1.6",
     "highlight.js": "^11.11.1",
     "lucide-react": "^0.475.0",
