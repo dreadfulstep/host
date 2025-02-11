@@ -1,9 +1,22 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import { Clipboard, ClipboardCheck, X } from "lucide-react";
+import { AlertTriangle, CheckCircle, Clipboard, ClipboardCheck, RefreshCcw, Terminal, X, XCircle } from "lucide-react";
 import ServerSidebar from "./components/ServerSidebar";
 import { toast } from "sonner";
+
+const logs = [
+  { message: "Server started", type: "success", time: "2 mins ago" },
+  { message: "SMTP connection established", type: "info", time: "5 mins ago" },
+  { message: "Backup completed", type: "success", time: "10 mins ago" }
+];
+
+const logIcons = {
+  success: <CheckCircle className="text-green-400" size={18} />,
+  info: <Terminal className="text-blue-400" size={18} />,
+  warning: <AlertTriangle className="text-yellow-400" size={18} />,
+  error: <XCircle className="text-red-400" size={18} />,
+};
 
 export default function ServerPage() {
   const { serverId } = useParams() ?? { serverId: "" };
@@ -86,15 +99,28 @@ export default function ServerPage() {
         </div>
 
         <div className="mt-8 p-6 bg-primary-a10/5 border border-primary-a10 rounded-lg">
-          <h2 className="text-2xl font-semibold">Recent Logs</h2>
-          <p className="text-tonal-a40 mt-2">Latest server events and actions.</p>
-          <div className="mt-4">
-            {["Server started", "SMTP connection established", "Backup completed"].map((log, idx) => (
-              <p key={idx} className="text-tonal-a30 text-sm py-1 border-b border-surface-a30 last:border-0">
-                {log}
-              </p>
-            ))}
-          </div>
+            <div className="flex justify-between items-center">
+                <h2 className="text-2xl font-semibold">Recent Logs</h2>
+                <button className="text-primary-a30 hover:text-primary-a20 transition">
+                <RefreshCcw size={20} />
+                </button>
+            </div>
+            <p className="text-tonal-a40 mt-2">Latest server events and actions.</p>
+
+            <div className="mt-4 space-y-3">
+                {logs.slice(0, 3).map((log, idx) => (
+                <div
+                    key={idx}
+                    className="flex items-center gap-3 p-3 border border-primary-a30/60 bg-primary-a10/10 rounded-lg"
+                >
+                    {logIcons[log.type as keyof typeof logIcons]}
+                    <div className="flex-1">
+                    <p className="text-white text-sm">{log.message}</p>
+                    <p className="text-xs text-tonal-a40">{log.time}</p>
+                    </div>
+                </div>
+                ))}
+            </div>
         </div>
       </main>
     </div>
