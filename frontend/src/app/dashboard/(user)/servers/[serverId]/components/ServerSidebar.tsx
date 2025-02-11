@@ -67,10 +67,10 @@ export default function ServerSidebar() {
             </button>
             </div>
 
-            <nav className="mt-4">
+            <nav className="mt-4 overflow-y-scroll">
             {[
                 { name: "Overview", href: `/dashboard/servers/${serverId}` },
-                { name: "Members", href: `/dashboard/servers/${serverId}/members` },
+                { name: "Console", href: `/dashboard/servers/${serverId}/console` },
                 { name: "Settings", href: `/dashboard/servers/${serverId}/settings` },
             ].map((item) => (
                 <Link
