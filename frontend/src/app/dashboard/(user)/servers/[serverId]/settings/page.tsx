@@ -3,10 +3,11 @@
 import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import ServerSidebar from "../components/ServerSidebar";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, Trash, Plus, FileText, Upload } from "lucide-react";
 import { toast } from "sonner";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/Select";
 
+// Function to parse pasted env variables
 const parseEnvVariables = (envString: string) => {
   const envVars: EnvVar[] = [];
   const regex = /([^=]+)=(.*)/g;
@@ -47,6 +48,9 @@ export default function SettingsPage() {
   const [githubRepo, setGithubRepo] = useState<string>(defaultConfig.githubRepo);
   const [envVars, setEnvVars] = useState<EnvVar[]>(defaultConfig.envVars);
   const [isSaving, setIsSaving] = useState<boolean>(false);
+  const [rawEnvInput, setRawEnvInput] = useState<string>("");
+
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
     setServerName(`Server ${serverId}`);
@@ -90,6 +94,21 @@ export default function SettingsPage() {
     alert("Mock GitHub Link button clicked");
   };
 
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleRawEnvSubmit = () => {
+    const parsedEnvVars = parseEnvVariables(rawEnvInput);
+    setEnvVars([...envVars, ...parsedEnvVars]);
+    setRawEnvInput(""); // Clear input after submitting
+    closeModal(); // Close modal after submission
+  };
+
   return (
     <div className="flex min-h-screen bg-surface-a0 text-white">
       <ServerSidebar />
@@ -111,14 +130,14 @@ export default function SettingsPage() {
             />
           </div>
 
-          <div className="mb-6 flex space-x-4">
+          <div className="flex space-x-4 mb-2">
             <div className="w-1/2">
               <label htmlFor="dockerImage" className="text-sm font-semibold text-neutral-300">
                 Docker Image Version
               </label>
               <div className="mt-2">
                 <Select value={dockerImage} onValueChange={(value) => setDockerImage(value)}>
-                  <SelectTrigger className="w-[180px] bg-primary-a0/10 border border-primary-a20/40">
+                  <SelectTrigger className="py-5 bg-primary-a0/10 border border-primary-a20/40">
                     <SelectValue placeholder="Select Docker Image" />
                   </SelectTrigger>
                   <SelectContent className="bg-surface-a0 text-white border border-primary-a20/40">
@@ -129,13 +148,10 @@ export default function SettingsPage() {
                     ))}
                   </SelectContent>
                 </Select>
-                <p className="mt-2 text-sm text-neutral-400">
-                  Selected Docker image: <strong>{dockerImage}</strong>
-                </p>
               </div>
             </div>
 
-            <div className="w-1/2">
+            <div className="w-1/2 mb-2">
               <label htmlFor="startupScript" className="text-sm font-semibold text-neutral-300">
                 Startup Script
               </label>
@@ -161,8 +177,8 @@ export default function SettingsPage() {
           </div>
 
           <div className="mb-6">
-            <label className="text-sm font-semibold text-neutral-300">Environment Variables</label>
             <div className="mt-2">
+              <label className="text-sm font-semibold text-neutral-300">Environment Variables</label>
               {envVars.map((envVar, index) => (
                 <div key={index} className="flex items-center gap-2 mb-4">
                   <input
@@ -180,7 +196,7 @@ export default function SettingsPage() {
                     placeholder="VALUE"
                   />
                   <button
-                    className="ml-2 text-yellow-500"
+                    className="ml-2 text-neutral-200"
                     onClick={() => toggleEnvVarVisibility(index)}
                   >
                     {envVar.isVisible ? <EyeOff size={18} /> : <Eye size={18} />}
@@ -189,16 +205,24 @@ export default function SettingsPage() {
                     className="ml-2 text-red-500"
                     onClick={() => removeEnvVar(index)}
                   >
-                    Remove
+                    <Trash size={18} />
                   </button>
                 </div>
               ))}
-              <button
-                className="text-blue-500"
-                onClick={addEnvVar}
-              >
-                Add Environment Variable
-              </button>
+              <div className="space-x-2">
+                <button
+                    className="px-4 py-2 bg-primary-a0/10 border border-primary-a20/40 rounded-lg"
+                    onClick={addEnvVar}
+                >
+                  <Plus size={24} />
+                </button>
+                <button
+                    className="px-4 py-2 bg-primary-a0/10 border border-primary-a20/40 rounded-lg"
+                    onClick={openModal}
+                >
+                    <Upload size={24} />
+                </button>
+              </div>
             </div>
           </div>
 
@@ -213,6 +237,36 @@ export default function SettingsPage() {
           </div>
         </div>
       </div>
+
+      {/* Modal for Raw Environment Variables */}
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-surface-a0 p-6 rounded-lg w-1/3">
+            <h2 className="text-lg font-semibold text-neutral-300 mb-4">Add Raw Environment Variables</h2>
+            <textarea
+              className="w-full px-4 py-2 bg-primary-a0/10 border border-primary-a20/40 rounded-lg mb-4"
+              rows={6}
+              value={rawEnvInput}
+              onChange={(e) => setRawEnvInput(e.target.value)}
+              placeholder="Paste raw env variables here (e.g., KEY=VALUE)"
+            />
+            <div className="flex justify-between">
+              <button
+                onClick={handleRawEnvSubmit}
+                className="bg-blue-500 text-white px-4 py-2 rounded-lg"
+              >
+                Submit
+              </button>
+              <button
+                onClick={closeModal}
+                className="bg-red-500 text-white px-4 py-2 rounded-lg"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
