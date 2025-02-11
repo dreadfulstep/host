@@ -3,6 +3,7 @@ export default function ServerLayout({
   }: Readonly<{
     children: React.ReactNode;
   }>) {
+    
     return (
         <main>
           {children}

@@ -1,23 +1,100 @@
 "use client";
 
 import { useParams } from "next/navigation";
+import { Clipboard, ClipboardCheck, X } from "lucide-react";
 import ServerSidebar from "./components/ServerSidebar";
+import { toast } from "sonner";
 
 export default function ServerPage() {
-  const { serverId } = useParams() ?? { serverId: '' };
+  const { serverId } = useParams() ?? { serverId: "" };
+  const user = { username: "admin" };
+
+  const handleCopy = (text: string) => {
+    navigator.clipboard.writeText(text);
+    toast.success("Copied to clipboard!", {
+        icon: <ClipboardCheck className="text-primary-a30" />,
+        duration: 2000,
+        className:
+          "bg-surface-a0 border border-primary-a20 text-white rounded-lg shadow-lg px-4 py-3 flex items-center",
+      });
+  };
 
   return (
     <div className="flex min-h-screen bg-surface-a0 text-white">
-      {serverId && <ServerSidebar serverId={serverId as string} />}
-
-      {/* Main Content */}
+      <ServerSidebar />
       <main className="flex-1 p-6">
         <h1 className="text-3xl font-semibold">Server: {serverId}</h1>
-        <p className="text-tonal-a40 mt-2">Welcome to the server dashboard.</p>
+        <p className="text-tonal-a40 mt-2">Server Overview & Status</p>
 
-        {/* Example Content */}
-        <div className="mt-6 p-4 border border-primary-a10 rounded-lg bg-tonal-a10/40">
-          <p>This is where server-specific content will go.</p>
+        <div className="mt-6 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+          {[
+            { title: "CPU Usage", value: "32%", color: "primary-a10" },
+            { title: "Memory Usage", value: "4.2GB / 8GB", color: "primary-a20" },
+            { title: "Disk Usage", value: "120GB / 256GB", color: "primary-a30" },
+            { title: "Uptime", value: "12d 4h 23m", color: "primary-a40" },
+          ].map((stat) => (
+            <div
+              key={stat.title}
+              className={`p-4 bg-primary-a10/5 border border-primary-a10/40 rounded-lg shadow-md`}
+            >
+              <p className="text-lg font-semibold">{stat.title}</p>
+              <p className="text-2xl mt-1 text-neutral-200">{stat.value}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="p-6 bg-primary-a10/5 border border-primary-a10/60 rounded-lg">
+            <h2 className="text-2xl font-semibold">SMTP Configuration</h2>
+            <p className="text-tonal-a40 mt-2">Mail server details for outgoing emails.</p>
+            
+            <div className="flex items-center justify-between mt-4 p-3 bg-primary-a20/10 border border-primary-a20/60 rounded-lg">
+              <span className="font-semibold">smtp.example.com:587</span>
+              <button
+                onClick={() => handleCopy("smtp.example.com:587")}
+                className="text-primary-a30 hover:text-primary-a20 transition"
+              >
+                <Clipboard size={18} />
+              </button>
+            </div>
+
+            <p className="mt-2 text-sm text-tonal-a40">
+              Username: <span className="font-semibold">{user.username}</span>
+            </p>
+            <p className="text-sm text-tonal-a40">
+              Password: <span className="font-semibold">Same as your account password</span>
+            </p>
+          </div>
+
+          <div className="p-6 bg-primary-a10/5 border border-primary-a10/60 rounded-lg">
+            <h2 className="text-2xl font-semibold">Server IP & Access</h2>
+            <p className="text-tonal-a40 mt-2">Use these details to connect to your server.</p>
+
+            <div className="flex items-center justify-between mt-4 p-3 bg-primary-a20/10 border border-primary-a20/60 rounded-lg">
+              <span className="font-semibold">192.168.1.100</span>
+              <button
+                onClick={() => handleCopy("192.168.1.100")}
+                className="text-primary-a30 hover:text-primary-a20 transition"
+              >
+                <Clipboard size={18} />
+              </button>
+            </div>
+
+            <p className="mt-2 text-sm text-tonal-a40">SSH Port: <span className="font-semibold">22</span></p>
+            <p className="text-sm text-tonal-a40">SFTP Port: <span className="font-semibold">22</span></p>
+          </div>
+        </div>
+
+        <div className="mt-8 p-6 bg-primary-a10/5 border border-primary-a10 rounded-lg">
+          <h2 className="text-2xl font-semibold">Recent Logs</h2>
+          <p className="text-tonal-a40 mt-2">Latest server events and actions.</p>
+          <div className="mt-4">
+            {["Server started", "SMTP connection established", "Backup completed"].map((log, idx) => (
+              <p key={idx} className="text-tonal-a30 text-sm py-1 border-b border-surface-a30 last:border-0">
+                {log}
+              </p>
+            ))}
+          </div>
         </div>
       </main>
     </div>
