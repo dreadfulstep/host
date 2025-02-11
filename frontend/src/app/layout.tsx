@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "sonner";
+import { TooltipProvider } from "@radix-ui/react-tooltip";
 
 const inter = Inter({ weight: "400", subsets: ["latin"] });
 
@@ -23,7 +24,9 @@ export default function RootLayout({
         <Toaster position="top-center" />
         <div className="absolute top-16 left-10 w-24 h-24 bg-primary-a10 blur-[80px] opacity-70 z-50"></div>
         <div className="absolute bottom-10 right-10 w-32 h-32 bg-primary-a30 blur-[100px] opacity-50 z-40"></div>
-        {children}
+        <TooltipProvider delayDuration={0}>
+          {children}
+        </TooltipProvider>
       </body>
     </html>
   );

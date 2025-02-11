@@ -6,18 +6,22 @@ import ServerSidebar from "../components/ServerSidebar";
 import { Eye, EyeOff, Trash, Plus, FileText, Upload } from "lucide-react";
 import { toast } from "sonner";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/Select";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/Tooltip";
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/Dialog";
+import { Label } from "@/components/ui/Label";
 
-// Function to parse pasted env variables
 const parseEnvVariables = (envString: string) => {
   const envVars: EnvVar[] = [];
-  const regex = /([^=]+)=(.*)/g;
-  const lines = envString.split("\n").map(line => line.trim()).filter(Boolean); // Split by lines
-  lines.forEach(line => {
-    const match = regex.exec(line);
-    if (match) {
-      envVars.push({ key: match[1], value: match[2], isVisible: false });
-    }
-  });
+  
+  const matches = envString.match(/^([^=]+)=(.*)$/gm);
+  
+  if (matches) {
+    matches.forEach((line) => {
+      const [key, value] = line.split("=");
+      envVars.push({ key: key.trim(), value: value.trim(), isVisible: false });
+    });
+  }
+
   return envVars;
 };
 
@@ -28,7 +32,7 @@ interface EnvVar {
 }
 
 const defaultConfig = {
-  dockerImage: "node:16", // Node.js image as an example
+  dockerImage: "node:16",
   startupScript: "npm run start",
   githubRepo: "",
   envVars: [
@@ -49,8 +53,6 @@ export default function SettingsPage() {
   const [envVars, setEnvVars] = useState<EnvVar[]>(defaultConfig.envVars);
   const [isSaving, setIsSaving] = useState<boolean>(false);
   const [rawEnvInput, setRawEnvInput] = useState<string>("");
-
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
     setServerName(`Server ${serverId}`);
@@ -94,19 +96,12 @@ export default function SettingsPage() {
     alert("Mock GitHub Link button clicked");
   };
 
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
-
   const handleRawEnvSubmit = () => {
     const parsedEnvVars = parseEnvVariables(rawEnvInput);
+    console.log(rawEnvInput)
+    console.log(parsedEnvVars)
     setEnvVars([...envVars, ...parsedEnvVars]);
-    setRawEnvInput(""); // Clear input after submitting
-    closeModal(); // Close modal after submission
+    setRawEnvInput("");
   };
 
   return (
@@ -216,12 +211,43 @@ export default function SettingsPage() {
                 >
                   <Plus size={24} />
                 </button>
-                <button
-                    className="px-4 py-2 bg-primary-a0/10 border border-primary-a20/40 rounded-lg"
-                    onClick={openModal}
-                >
-                    <Upload size={24} />
-                </button>
+                <Dialog>
+                  <DialogTrigger asChild>
+                          <button
+                              className="px-4 py-2 bg-primary-a0/10 border border-primary-a20/40 rounded-lg"
+                          >
+                              <Upload size={24} />
+                          </button>
+                  </DialogTrigger>
+                  <DialogContent className="sm:max-w-[425px] bg-surface-a0 border-primary-a10/40 text-white">
+                    <DialogHeader>
+                      <DialogTitle>Add Raw Environment Variables</DialogTitle>
+                      <DialogDescription>
+                        Paste your raw environment variables below. They will be parsed and added.
+                      </DialogDescription>
+                    </DialogHeader>
+                    <div className="grid gap-4 py-4">
+                      <div className="grid grid-cols-1 gap-4">
+                        <Label htmlFor="rawEnvInput" className="text-right">
+                          Environment Variables
+                        </Label>
+                        <textarea
+                          id="rawEnvInput"
+                          className="w-full px-4 py-2 bg-primary-a0/10 border border-primary-a20/40 rounded-lg resize-none mb-4"
+                          rows={6}
+                          value={rawEnvInput}
+                          onChange={(e) => setRawEnvInput(e.target.value)}
+                          placeholder="Paste raw env variables here (e.g., KEY=VALUE)"
+                        />
+                      </div>
+                    </div>
+                    <DialogFooter>
+                      <DialogClose asChild>
+                        <button onClick={handleRawEnvSubmit} className="px-4 py-2 bg-primary-a0/10 border border-primary-a20/40 rounded-lg hover:bg-primary-a20/15 transition">Submit</button>
+                      </DialogClose>
+                    </DialogFooter>
+                  </DialogContent>
+                </Dialog>
               </div>
             </div>
           </div>
@@ -238,35 +264,6 @@ export default function SettingsPage() {
         </div>
       </div>
 
-      {/* Modal for Raw Environment Variables */}
-      {isModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-surface-a0 p-6 rounded-lg w-1/3">
-            <h2 className="text-lg font-semibold text-neutral-300 mb-4">Add Raw Environment Variables</h2>
-            <textarea
-              className="w-full px-4 py-2 bg-primary-a0/10 border border-primary-a20/40 rounded-lg mb-4"
-              rows={6}
-              value={rawEnvInput}
-              onChange={(e) => setRawEnvInput(e.target.value)}
-              placeholder="Paste raw env variables here (e.g., KEY=VALUE)"
-            />
-            <div className="flex justify-between">
-              <button
-                onClick={handleRawEnvSubmit}
-                className="bg-blue-500 text-white px-4 py-2 rounded-lg"
-              >
-                Submit
-              </button>
-              <button
-                onClick={closeModal}
-                className="bg-red-500 text-white px-4 py-2 rounded-lg"
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
