@@ -10,8 +10,17 @@ export default function ServerSidebar() {
     const [isOpen, setIsOpen] = useState(false);
     const pathname = usePathname();
 
-    const isActive = (path: string) => path === pathname;
-  
+    const isActive = (href: string) => {
+        if (href === `/dashboard/servers/${serverId}`) {
+            return pathname === `/dashboard/servers/${serverId}`;
+          }
+          if (href === `/dashboard/servers/${serverId}/files`) {
+            return pathname.startsWith(`/dashboard/servers/${serverId}/files`);
+          }
+      
+          return pathname.startsWith(href);
+        };
+      
     useEffect(() => {
         if (isOpen) {
             document.body.style.overflowY = "hidden";
