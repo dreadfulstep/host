@@ -28,7 +28,7 @@ export default function ServerConsolePage() {
     <div className="h-screen flex text-white">
       <ServerSidebar />
 
-      <div className="flex-1 flex flex-col p-4 gap-4">
+      <div className="flex-1 flex flex-col p-4 gap-4 mt-16 md:mt-0">
         <div className="flex flex-col md:flex-row gap-4">
           <div className="w-full md:w-2/3 flex flex-col bg-primary-a0/10 rounded-lg border border-primary-a10/40 shadow-lg">
             <div className="p-4 border-b border-primary-a10/40 flex items-center gap-3">

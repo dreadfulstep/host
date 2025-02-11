@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Menu, Play, Power, RotateCcw, X } from "lucide-react";
+import { File, Home, Menu, Play, Power, RotateCcw, Settings, Terminal, X } from "lucide-react";
 import { useParams, usePathname } from "next/navigation";
 
 export default function ServerSidebar() {
@@ -69,19 +69,21 @@ export default function ServerSidebar() {
 
             <nav className="mt-4 overflow-y-scroll">
             {[
-                { name: "Overview", href: `/dashboard/servers/${serverId}` },
-                { name: "Console", href: `/dashboard/servers/${serverId}/console` },
-                { name: "Settings", href: `/dashboard/servers/${serverId}/settings` },
+                { name: "Overview", href: `/dashboard/servers/${serverId}`, icon: Home },
+                { name: "Files", href: `/dashboard/servers/${serverId}/files`, icon: File },
+                { name: "Console", href: `/dashboard/servers/${serverId}/console`, icon: Terminal },
+                { name: "Settings", href: `/dashboard/servers/${serverId}/settings`, icon: Settings },
             ].map((item) => (
                 <Link
                 key={item.href}
                 href={item.href}
-                className={`block p-4 border-l-4 transition cursor-pointer ${
+                className={`p-4 border-l-4 transition cursor-pointer flex items-center gap-x-3 ${
                     isActive(item.href)
                     ? "bg-gradient-to-r from-primary-a10/20 to-transparent border-primary-a10 text-white"
                     : "text-neutral-400 hover:text-neutral-200 border-transparent hover:bg-gradient-to-r hover:from-primary-a10/20 hover:to-transparent hover:border-primary-a10 active:bg-gradient-to-r active:from-primary-a20/20 active:to-transparent active:border-primary-a20"
                 }`}
                 >
+                <item.icon />
                 {item.name}
                 </Link>
             ))}
