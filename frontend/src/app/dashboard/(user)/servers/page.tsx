@@ -32,7 +32,7 @@ export default function ServersPage() {
     <div className="flex min-h-screen text-white">
       <Sidebar />
 
-      <main className="flex-1 p-6">
+      <main className="flex-1 p-6 mt-16 md:mt-0">
         <h2 className="text-4xl font-bold tracking-tight">Your Servers</h2>
         <p className="opacity-80 mt-2 text-lg">Manage your hosted services.</p>
 

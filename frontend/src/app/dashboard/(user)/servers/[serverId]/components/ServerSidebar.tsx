@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Menu, Play, Power, RotateCcw, X } from "lucide-react";
 import { useParams, usePathname } from "next/navigation";
@@ -11,26 +11,39 @@ export default function ServerSidebar() {
     const pathname = usePathname();
 
     const isActive = (path: string) => path === pathname;
+  
+    useEffect(() => {
+        if (isOpen) {
+            document.body.style.overflowY = "hidden";
+        } else {
+            document.body.style.overflowY = "auto";
+        }
+    
+        return () => {
+            document.body.style.overflowY = "auto";
+        };
+    }, [isOpen]);
 
-    return (
-        <>
-        {/* Mobile Menu Button */}
-        <button
-            className="md:hidden fixed top-4 left-4 z-50 bg-primary-a30 p-2 rounded-lg"
-            onClick={() => setIsOpen(true)}
-        >
-            <Menu size={24} />
-        </button>
+  return (
+    <>
+        <div className="md:hidden fixed top-0 left-0 w-full bg-surface-a0/60 backdrop-blur-md z-50 shadow-lg">
+            <div className="flex justify-between items-center p-4">
+            <h1 className="text-xl font-semibold text-white">Server {serverId}</h1>
+            <button
+                className="p-2 rounded-lg"
+                onClick={() => setIsOpen(!isOpen)}
+            >
+                <Menu size={24} className="text-white" />
+            </button>
+            </div>
+        </div>
 
         <div
-            className={`h-screen w-64 bg-surface-a10 md:bg-surface-a10/10 border-primary-a0/35 md:border-r text-white shadow-lg transition-transform duration-300 ease-in-out
-            ${isOpen ? "translate-x-0" : "-translate-x-64"} md:translate-x-0 md:relative md:flex md:flex-col`}
+            className={`fixed top-0 left-0 h-full w-full bg-surface-a0 border-r border-primary-a10/40 z-40 transition-transform duration-300 ease-in-out
+            ${isOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0 md:relative md:flex md:w-64 md:flex-col md:min-h-screen`}
         >
             <div className="flex justify-between items-center p-4 border-b border-surface-a30">
             <h1 className="text-xl font-semibold">Server {serverId}</h1>
-            <button className="md:hidden" onClick={() => setIsOpen(false)}>
-                <X size={24} />
-            </button>
             </div>
 
             <div className="m-4 p-4 rounded-lg border border-primary-a10/60">
@@ -77,10 +90,10 @@ export default function ServerSidebar() {
 
         {isOpen && (
             <div
-            className="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"
+            className="fixed inset-0 bg-black bg-opacity-50 z-30 md:hidden"
             onClick={() => setIsOpen(false)}
             />
         )}
-        </>
-    );
+    </>
+  );
 }

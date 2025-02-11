@@ -1,17 +1,14 @@
 "use client";
 
 import Sidebar from "./components/Sidebar";
-import { ExternalLink, HelpCircle, LifeBuoy, Server } from "lucide-react"; // Icons
+import { ExternalLink, HelpCircle, LifeBuoy, Server } from "lucide-react";
 
 export default function Dashboard() {
   return (
     <div className="flex min-h-screen text-white">
-      {/* Sidebar */}
       <Sidebar />
 
-      {/* Main Content */}
-      <main className="flex-1 p-6 md:ml-0">
-        {/* Welcome Section */}
+      <main className="flex-1 p-6 mt-16 md:mt-0">
         <section className="mb-8">
           <h2 className="text-4xl font-bold tracking-tight">Welcome Back! 👋</h2>
           <p className="opacity-80 mt-2 text-lg">
@@ -19,7 +16,6 @@ export default function Dashboard() {
           </p>
         </section>
 
-        {/* Action Cards */}
         <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {[
             {

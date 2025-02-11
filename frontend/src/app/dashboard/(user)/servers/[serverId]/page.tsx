@@ -35,7 +35,7 @@ export default function ServerPage() {
   return (
     <div className="flex min-h-screen bg-surface-a0 text-white">
       <ServerSidebar />
-      <main className="flex-1 p-6">
+      <main className="flex-1 p-6 mt-16 md:mt-0 overflow-y-scroll">
         <h1 className="text-3xl font-semibold">Server: {serverId}</h1>
         <p className="text-tonal-a40 mt-2">Server Overview & Status</p>
 
