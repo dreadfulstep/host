@@ -228,16 +228,16 @@ export default function SettingsPage() {
                     </DialogHeader>
                     <div className="grid gap-4 py-4">
                       <div className="grid grid-cols-1 gap-4">
-                        <Label htmlFor="rawEnvInput" className="text-right">
+                        <Label htmlFor="rawEnvInput" className="text-left">
                           Environment Variables
                         </Label>
                         <textarea
                           id="rawEnvInput"
-                          className="w-full px-4 py-2 bg-primary-a0/10 border border-primary-a20/40 rounded-lg resize-none mb-4"
+                          className="w-full px-4 py-2 bg-primary-a0/10 border border-primary-a20/40 focus:outline-none focus:ring ring-2 ring-primary-a30/60 rounded-lg resize-none mb-4"
                           rows={6}
                           value={rawEnvInput}
                           onChange={(e) => setRawEnvInput(e.target.value)}
-                          placeholder="Paste raw env variables here (e.g., KEY=VALUE)"
+                          placeholder="KEY=VALUE"
                         />
                       </div>
                     </div>
