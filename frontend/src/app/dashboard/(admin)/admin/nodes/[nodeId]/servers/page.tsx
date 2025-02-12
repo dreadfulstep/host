@@ -94,7 +94,7 @@ export default function ServersPage() {
                     <Link
                       href={`/dashboard/admin/servers/${server.id}`}
                     >
-                        <button className="p-2 bg-primary-a20/20 text-primary-a50 rounded-md hover:bg-blue-500/20 transition">
+                        <button className="p-2 bg-primary-a20/20 text-primary-a50 rounded-md hover:bg-primary-a20/40 transition">
                         <Settings size={18} />
                         </button>
                     </Link>
