@@ -4,6 +4,7 @@ import { Cpu, MemoryStick, HardDrive, Server, Settings } from "lucide-react";
 import AdminSidebar from "../../../components/Sidebar";
 import { useParams } from "next/navigation";
 import NodeSidebar from "./components/Sidebar";
+import Link from "next/link";
 
 const nodes = [
   {
@@ -62,79 +63,77 @@ export default function NodeDetails() {
           <p className="opacity-80 mt-2 text-lg">View and manage the details of this node.</p>
         </section>
 
-        <div className="bg-primary-a0/10 p-6 rounded-lg border border-primary-a20/40 shadow-md">
-          <h3 className="text-2xl font-semibold mb-4">Node Overview</h3>
-          <table className="w-full min-w-full table-auto">
-            <thead>
-              <tr className="border-b border-primary-a20/40">
-                <th className="p-3 text-left">Attribute</th>
-                <th className="p-3 text-left">Value</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr className="border-b border-primary-a20/40">
-                <td className="p-3 font-medium">Status</td>
-                <td className="p-3">
-                  <span
-                    className={`px-2 py-1 rounded-md text-sm ${
-                      node.status === "Active"
-                        ? "bg-green-500/20 text-green-400"
-                        : "bg-yellow-500/20 text-yellow-400"
-                    }`}
-                  >
-                    {node.status}
-                  </span>
-                </td>
-              </tr>
-              <tr className="border-b border-primary-a20/40">
-                <td className="p-3 font-medium">CPU Usage</td>
-                <td className="p-3 flex items-center gap-2">
-                  <Cpu size={16} />
-                  {node.cpuUsage}
-                </td>
-              </tr>
-              <tr className="border-b border-primary-a20/40">
-                <td className="p-3 font-medium">Memory Usage</td>
-                <td className="p-3 flex items-center gap-2">
-                  <MemoryStick size={16} />
-                  {node.memoryUsage}
-                </td>
-              </tr>
-              <tr className="border-b border-primary-a20/40">
-                <td className="p-3 font-medium">Storage Usage</td>
-                <td className="p-3 flex items-center gap-2">
-                  <HardDrive size={16} />
-                  {node.storageUsage}
-                </td>
-              </tr>
-              <tr className="border-b border-primary-a20/40">
-                <td className="p-3 font-medium">Server Count</td>
-                <td className="p-3 flex items-center gap-2">
-                  <Server size={16} />
-                  {node.serverCount}
-                </td>
-              </tr>
-            </tbody>
-          </table>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="bg-primary-a0/10 p-6 rounded-lg border border-primary-a20/40 shadow-md">
+            <h3 className="text-xl font-semibold mb-4">Status</h3>
+            <div className="flex items-center gap-2">
+              <span
+                className={`px-2 py-1 rounded-md text-md ${
+                  node.status === "Active"
+                    ? "bg-green-500/20 text-green-400"
+                    : "bg-yellow-500/20 text-yellow-400"
+                }`}
+              >
+                {node.status}
+              </span>
+            </div>
+          </div>
+
+          <div className="bg-primary-a0/10 p-6 rounded-lg border border-primary-a20/40 shadow-md">
+            <h3 className="text-xl font-semibold mb-4">CPU Usage</h3>
+            <div className="flex items-center gap-2">
+              <Cpu size={24} className="text-primary-a50" />
+              <span>{node.cpuUsage}</span>
+            </div>
+          </div>
+
+          <div className="bg-primary-a0/10 p-6 rounded-lg border border-primary-a20/40 shadow-md">
+            <h3 className="text-xl font-semibold mb-4">Memory Usage</h3>
+            <div className="flex items-center gap-2">
+              <MemoryStick size={24} className="text-primary-a50" />
+              <span>{node.memoryUsage}</span>
+            </div>
+          </div>
+
+          <div className="bg-primary-a0/10 p-6 rounded-lg border border-primary-a20/40 shadow-md">
+            <h3 className="text-xl font-semibold mb-4">Storage Usage</h3>
+            <div className="flex items-center gap-2">
+              <HardDrive size={24} className="text-primary-a50" />
+              <span>{node.storageUsage}</span>
+            </div>
+          </div>
         </div>
 
-        <section className="mt-10">
-          <h3 className="text-2xl font-semibold mb-4">Actions</h3>
-          <div className="flex gap-4">
-            <button className="p-3 bg-green-500/20 text-green-400 rounded-md hover:bg-green-500/30 transition">
-              Start Node
-            </button>
-            <button className="p-3 bg-yellow-500/20 text-yellow-400 rounded-md hover:bg-yellow-500/30 transition">
-              Maintenance Mode
-            </button>
-            <button className="p-3 bg-red-500/20 text-red-400 rounded-md hover:bg-red-500/30 transition">
-              Stop Node
-            </button>
-            <button className="p-3 bg-blue-500/20 text-blue-400 rounded-md hover:bg-blue-500/30 transition">
-              <Settings size={18} />
-              Configure Node
-            </button>
-          </div>
+        <h3 className="mt-10 text-2xl font-bold">Quick Links</h3>
+        <section className="mt-4 w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <Link href={`/dashboard/nodes/${nodeId}/servers`} className="bg-primary-a0/10 p-6 rounded-lg border border-primary-a20/40 shadow-md flex flex-col items-start">
+            <div className="flex items-center gap-2 mb-2">
+                <Server size={24} className="text-primary-a50" />
+                <h3 className="text-xl font-semibold">Servers</h3>
+            </div>
+            <p className="opacity-80">Manage the servers associated with this node.</p>
+            </Link>
+            <Link href={`/dashboard/nodes/${nodeId}/settings`} className="bg-primary-a0/10 p-6 rounded-lg border border-primary-a20/40 shadow-md flex flex-col items-start">
+            <div className="flex items-center gap-2 mb-2">
+                <Settings size={24} className="text-primary-a50" />
+                <h3 className="text-xl font-semibold">Settings</h3>
+            </div>
+            <p className="opacity-80">Configure node settings and preferences.</p>
+            </Link>
+            <Link href={`/dashboard/nodes/${nodeId}/cpu`} className="bg-primary-a0/10 p-6 rounded-lg border border-primary-a20/40 shadow-md flex flex-col items-start">
+            <div className="flex items-center gap-2 mb-2">
+                <Cpu size={24} className="text-primary-a50" />
+                <h3 className="text-xl font-semibold">Console</h3>
+            </div>
+            <p className="opacity-80">Monitor the logs of this node.</p>
+            </Link>
+            <Link href={`/dashboard/nodes/${nodeId}/memory`} className="bg-primary-a0/10 p-6 rounded-lg border border-primary-a20/40 shadow-md flex flex-col items-start">
+            <div className="flex items-center gap-2 mb-2">
+                <MemoryStick size={24} className="text-primary-a50" />
+                <h3 className="text-xl font-semibold">Memory Usage</h3>
+            </div>
+            <p className="opacity-80">Check the memory usage statistics.</p>
+            </Link>
         </section>
       </main>
     </div>
