@@ -56,8 +56,6 @@ export default function NodeSidebar() {
             { name: "Servers", href: `/dashboard/admin/nodes/${nodeId}/servers`, icon: Server },
             { name: "Databases", href: `/dashboard/admin/nodes/${nodeId}/databases`, icon: Database },
             { name: "Settings", href: `/dashboard/admin/nodes/${nodeId}/settings`, icon: Settings },
-            { name: "Metrics", href: `/dashboard/admin/nodes/${nodeId}/metrics`, icon: Menu },
-            { name: "Alerts", href: `/dashboard/admin/nodes/${nodeId}/alerts`, icon: X },
           ].map((item) => (
             <Link
               key={item.href}
