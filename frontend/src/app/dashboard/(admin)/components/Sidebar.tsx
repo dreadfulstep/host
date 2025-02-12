@@ -2,10 +2,10 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Menu, X } from "lucide-react";
+import { Database, Home, Logs, Menu, Server, Settings, X } from "lucide-react";
 import { usePathname } from "next/navigation";
 
-export default function ClientSidebar() {
+export default function AdminSidebar() {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
 
@@ -50,21 +50,23 @@ export default function ClientSidebar() {
 
         <nav className="mt-4">
           {[
-            { name: "Home", href: "/dashboard" },
-            { name: "Servers", href: "/dashboard/servers" },
-            { name: "Settings", href: "/dashboard/settings" },
-            { name: "Logs", href: "/dashboard/logs" },
+            { name: "Overview", href: "/dashboard/admin", icon: Home },
+            { name: "Servers", href: "/dashboard/admin/servers", icon: Server },
+            { name: "Nodes", href: "/dashboard/admin/nodes", icon: Database },
+            { name: "Settings", href: "/dashboard/admin/settings", icon: Settings },
+            { name: "Logs", href: "/dashboard/admin/logs", icon: Logs },
           ].map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className={`block p-4 border-l-4 transition cursor-pointer ${
+              className={`p-4 border-l-4 transition cursor-pointer flex items-center ${
                 isActive(item.href)
                   ? "bg-gradient-to-r from-primary-a10/20 to-transparent border-primary-a10 text-white"
                   : "text-neutral-400 hover:text-neutral-200 border-transparent hover:bg-gradient-to-r hover:from-primary-a10/20 hover:to-transparent hover:border-primary-a10 active:bg-gradient-to-r active:from-primary-a20/20 active:to-transparent active:border-primary-a20"
               }`}
             >
-              {item.name}
+                {item.icon && <item.icon className="mr-2"/>}
+                {item.name}
             </Link>
           ))}
         </nav>

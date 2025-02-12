@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.className} min-h-screen relative w-full`}
+        className={`${inter.className} min-h-screen relative w-full bg-surface-a0`}
       >
         <Toaster position="top-center" />
         <div className="absolute top-16 left-10 w-24 h-24 bg-primary-a10 blur-[80px] opacity-70 z-50"></div>
