@@ -2,6 +2,7 @@
 
 import { Server, HardDrive, Cpu, MemoryStick, Gauge, Settings, Trash2, Power } from "lucide-react";
 import AdminSidebar from "../../components/Sidebar";
+import Link from "next/link";
 
 const nodes = [
   {
@@ -78,9 +79,9 @@ export default function AdminNodes() {
                   <td className="p-3">{node.storageUsage}</td>
                   <td className="p-3">{node.serverCount}</td>
                   <td className="p-3 flex justify-end gap-2">
-                    <button className="p-2 bg-primary-a20/20 text-primary-a50 rounded-md hover:bg-blue-500/20 transition">
+                    <Link href={`/dashboard/admin/nodes/${node.id}`} className="p-2 bg-primary-a20/20 text-primary-a50 rounded-md hover:bg-blue-500/20 transition">
                       <Settings size={18} />
-                    </button>
+                    </Link>
                   </td>
                 </tr>
               ))}
