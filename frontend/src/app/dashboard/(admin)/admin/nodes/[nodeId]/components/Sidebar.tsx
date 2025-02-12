@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Database, Home, Logs, Menu, Server, Settings, X } from "lucide-react";
+import { Database, Home, Menu, Server, Settings, Terminal, X } from "lucide-react";
 import { useParams, usePathname } from "next/navigation";
 
 export default function NodeSidebar() {
@@ -52,10 +52,10 @@ export default function NodeSidebar() {
         <nav className="mt-4">
         {[
             { name: "Overview", href: `/dashboard/admin/nodes/${nodeId}`, icon: Home },
+            { name: "Console", href: `/dashboard/admin/nodes/${nodeId}/console`, icon: Terminal },
             { name: "Servers", href: `/dashboard/admin/nodes/${nodeId}/servers`, icon: Server },
             { name: "Databases", href: `/dashboard/admin/nodes/${nodeId}/databases`, icon: Database },
             { name: "Settings", href: `/dashboard/admin/nodes/${nodeId}/settings`, icon: Settings },
-            { name: "Logs", href: `/dashboard/admin/nodes/${nodeId}/logs`, icon: Logs },
             { name: "Metrics", href: `/dashboard/admin/nodes/${nodeId}/metrics`, icon: Menu },
             { name: "Alerts", href: `/dashboard/admin/nodes/${nodeId}/alerts`, icon: X },
           ].map((item) => (
